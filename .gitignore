@@ -1,0 +1,11 @@
+/vendor/
+composer.lock
+.phpunit.result.cache
+.phpstan/
+phpunit.xml.bak
+.idea/
+.vscode/
+*.cache
+.kiro
+docs
+.phpunit.cache
