@@ -339,15 +339,3 @@ composer test
 composer phpstan
 composer cs:check
 ```
-
-Если проект запускается в Docker (как в текущем репозитории):
-
-```bash
-docker exec $(docker ps -q -f name=laravel.test) bash -c "cd /var/www/html/packages/ex3mm/kontur-fokus && composer test"
-docker exec $(docker ps -q -f name=laravel.test) bash -c "cd /var/www/html/packages/ex3mm/kontur-fokus && composer phpstan"
-docker exec $(docker ps -q -f name=laravel.test) bash -c "cd /var/www/html/packages/ex3mm/kontur-fokus && composer cs:check"
-```
-
-## Прогресс реализации
-
-Трекер шагов: `IMPLEMENTATION_STEPS.md`
