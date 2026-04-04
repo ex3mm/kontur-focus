@@ -1,0 +1,108 @@
+[
+    {
+        "inn": "7704305026",
+        "ogrn": "1157746092349",
+        "focusHref": "https://focus.kontur.ru/entity?query=1157746092349",
+        "statedCapital": {
+            "sum": 101000000,
+            "date": "2022-01-27"
+        },
+        "beneficialOwners": {
+            "beneficialOwnersFL": [
+                {
+                    "fio": "Осеевский Михаил Эдуардович",
+                    "innfl": "780601120366",
+                    "share": 0.258416111170811,
+                    "isAccurate": true
+                }
+            ],
+            "beneficialOwnersUL": [
+                {
+                    "ogrn": "1087746829994",
+                    "inn": "7710723134",
+                    "fullName": "Федеральное агентство по управлению государственным имуществом",
+                    "share": 48.4708981095003,
+                    "isAccurate": true
+                },
+                {
+                    "ogrn": "1077711000102",
+                    "inn": "7750004150",
+                    "fullName": "Государственная корпорация развития \"Вэб.РФ\"",
+                    "share": 3.32673591911191,
+                    "isAccurate": true
+                },
+                {
+                    "ogrn": "1057811767232",
+                    "inn": "7840321450",
+                    "fullName": "АО \"Амт\"",
+                    "share": 0.989999994635582,
+                    "isAccurate": true
+                }
+            ],
+            "beneficialOwnersForeign": [],
+            "beneficialOwnersOther": [
+                {
+                    "fullName": "Нко АО Нрд – номинальный держатель",
+                    "share": 26.9307217690039,
+                    "isAccurate": true
+                },
+                {
+                    "fullName": "Акции, собственники которых не установлены",
+                    "share": 11.6511817931437,
+                    "isAccurate": true
+                },
+                {
+                    "fullName": "State Oil Fund Of The Republic Of Azerbaijan (Государственный Нефтяной Фонд Республики Азербайджан)",
+                    "share": 0.515588029903234,
+                    "isAccurate": true
+                },
+                {
+                    "fullName": "Qatar Holding LLC (Катар Холдинг Ллси)",
+                    "share": 0.410722651335885,
+                    "isAccurate": true
+                }
+            ]
+        },
+        "historicalBeneficialOwners": {
+            "beneficialOwnersFL": [
+                {
+                    "fio": "Шишханов Микаил Османович",
+                    "innfl": "773205164190"
+                },
+                {
+                    "fio": "Девятов Леонид Владимирович",
+                    "innfl": "463402779127"
+                },
+                {
+                    "fio": "Миронов Олег Сергеевич",
+                    "innfl": "463403775083"
+                }
+            ],
+            "beneficialOwnersUL": [
+                {
+                    "ogrn": "1037700013020",
+                    "inn": "7702235133",
+                    "fullName": "Центральный банк Российской Федерации"
+                }
+            ],
+            "beneficialOwnersForeign": [
+                {
+                    "fullName": "Мобайл Телесистемс Б.В., Частная Компания с ограниченной ответственностью",
+                    "country": "Нидерланды"
+                },
+                {
+                    "fullName": "Компания с ограниченной ответственностью \"Ризанто Секьюритиз Лимитед\"",
+                    "country": "Кипр"
+                }
+            ],
+            "beneficialOwnersOther": [
+                {
+                    "fullName": "Otkritie Ltd (Открытие ЛТД)"
+                },
+                {
+                    "fullName": "Правительство Российской Федерации"
+                }
+            ]
+        }
+    }
+]

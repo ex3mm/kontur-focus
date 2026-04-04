@@ -12,6 +12,7 @@ use Ex3mm\KonturFocus\Contracts\EndpointInterface;
 use Ex3mm\KonturFocus\Contracts\RequestBuilderInterface;
 use Ex3mm\KonturFocus\Contracts\ResponseMapperInterface;
 use Ex3mm\KonturFocus\Endpoints\BankruptcyAnalyticsEndpoint;
+use Ex3mm\KonturFocus\Endpoints\BeneficiaryEndpoint;
 use Ex3mm\KonturFocus\Endpoints\CourtAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\CustomEndpoint;
 use Ex3mm\KonturFocus\Endpoints\EgrDetailsEndpoint;
@@ -92,6 +93,10 @@ final class KonturFocusManager
         return $this->builder(new LicensesEndpoint());
     }
 
+    public function beneficiary(): RequestBuilderInterface
+    {
+        return $this->builder(new BeneficiaryEndpoint());
+    }
 
     public function custom(string $endpoint): RequestBuilderInterface
     {

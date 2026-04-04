@@ -7,6 +7,12 @@
 
 ## [Unreleased]
 
+## [1.2.0] - 2025-04-04
+
+### Added
+
+- Добавлен endpoint `beneficiary()` для получения конечных бенефициаров компании (`/api3/beneficialOwners`)
+
 ## [1.1.0] - 2025-04-04
 
 ### Added

@@ -150,6 +150,7 @@ return [
 | `linkAnalytics()` | `/api3/linkAnalytics` | `LinkAnalyticsResponseDto` | Да |
 | `purchasesAnalytics()` | `/api3/purchasesAnalytics` | `PurchasesAnalyticsResponseDto` | Да |
 | `licenses()` | `/api3/licences` | `LicensesResponseDto` | Да |
+| `beneficiary()` | `/api3/beneficialOwners` | `BeneficiaryResponseDTO` | Да |
 | `custom('/api3/...')` | произвольный | нет | Нет |
 
 ## Использование RequestBuilder
