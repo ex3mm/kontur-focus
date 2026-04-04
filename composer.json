@@ -1,6 +1,7 @@
 {
   "name": "ex3mm/kontur-focus",
   "description": "Laravel/PHP package for Kontur.Focus API integration",
+  "version": "1.0.1",
   "type": "library",
   "license": "MIT",
   "require": {

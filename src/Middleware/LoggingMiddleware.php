@@ -69,12 +69,14 @@ final class LoggingMiddleware
 
         if (in_array($config->level, [LoggingConfig::LEVEL_BODY, LoggingConfig::LEVEL_DEBUG], true)) {
             $responseBody = (string) $response->getBody();
+            $response->getBody()->rewind();
             $context['response_body'] = self::truncate($responseBody, $config->maxBodySize);
             $context['response_size'] = strlen($responseBody);
         }
 
         if ($config->level === LoggingConfig::LEVEL_DEBUG) {
             $requestBody = (string) $request->getBody();
+            $request->getBody()->rewind();
             $context['request_body'] = self::truncate($requestBody, $config->maxBodySize);
             $context['request_size'] = strlen($requestBody);
         }
@@ -116,6 +118,7 @@ final class LoggingMiddleware
 
         if ($config->level === LoggingConfig::LEVEL_DEBUG) {
             $requestBody = (string) $request->getBody();
+            $request->getBody()->rewind();
             $context['request_body'] = self::truncate($requestBody, $config->maxBodySize);
             $context['request_size'] = strlen($requestBody);
         }
