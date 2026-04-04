@@ -149,6 +149,7 @@ return [
 | `fsspAnalytics()` | `/api3/fsspAnalytics` | `FsspAnalyticsResponseDto` | Да |
 | `linkAnalytics()` | `/api3/linkAnalytics` | `LinkAnalyticsResponseDto` | Да |
 | `purchasesAnalytics()` | `/api3/purchasesAnalytics` | `PurchasesAnalyticsResponseDto` | Да |
+| `licenses()` | `/api3/licences` | `LicensesResponseDto` | Да |
 | `custom('/api3/...')` | произвольный | нет | Нет |
 
 ## Использование RequestBuilder
@@ -330,12 +331,3 @@ python3 scripts/generate_dtos.py
 
 - `src/DTOs/Response/*`
 
-## Разработка
-
-Локальные команды:
-
-```bash
-composer test
-composer phpstan
-composer cs:check
-```

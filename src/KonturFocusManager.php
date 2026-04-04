@@ -18,6 +18,7 @@ use Ex3mm\KonturFocus\Endpoints\EgrDetailsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\FinanceAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\FsspAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\LegalAnalyticsEndpoint;
+use Ex3mm\KonturFocus\Endpoints\LicensesEndpoint;
 use Ex3mm\KonturFocus\Endpoints\LinkAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\PurchasesAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\ReqEndpoint;
@@ -85,6 +86,12 @@ final class KonturFocusManager
     {
         return $this->builder(new PurchasesAnalyticsEndpoint());
     }
+
+    public function licenses(): RequestBuilderInterface
+    {
+        return $this->builder(new LicensesEndpoint());
+    }
+
 
     public function custom(string $endpoint): RequestBuilderInterface
     {

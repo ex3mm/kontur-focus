@@ -17,6 +17,7 @@ use Ex3mm\KonturFocus\Contracts\RequestBuilderInterface;
  * @method static RequestBuilderInterface fsspAnalytics()
  * @method static RequestBuilderInterface linkAnalytics()
  * @method static RequestBuilderInterface purchasesAnalytics()
+ * @method static RequestBuilderInterface licenses()
  * @method static RequestBuilderInterface custom(string $endpoint)
  *
  * @see \Ex3mm\KonturFocus\KonturFocusManager
