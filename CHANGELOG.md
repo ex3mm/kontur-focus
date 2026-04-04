@@ -7,6 +7,23 @@
 
 ## [Unreleased]
 
+## [1.3.0] - 2025-04-04
+
+### Added
+
+- Добавлены упрощённые методы в фасад:
+  - `getReq(?string $inn = null, ?string $ogrn = null): CollectionResponse`
+  - `getEgrDetails(?string $inn = null, ?string $ogrn = null): CollectionResponse`
+  - `getLegalAnalytics(?string $inn = null, ?string $ogrn = null): CollectionResponse`
+  - `getBankruptcyAnalytics(?string $inn = null, ?string $ogrn = null): CollectionResponse`
+  - `getCourtAnalytics(?string $inn = null, ?string $ogrn = null): CollectionResponse`
+  - `getFinanceAnalytics(?string $inn = null, ?string $ogrn = null): CollectionResponse`
+  - `getFsspAnalytics(?string $inn = null, ?string $ogrn = null): CollectionResponse`
+  - `getLinkAnalytics(?string $inn = null, ?string $ogrn = null): CollectionResponse`
+  - `getPurchasesAnalytics(?string $inn = null, ?string $ogrn = null): CollectionResponse`
+  - `getLicenses(?string $inn = null, ?string $ogrn = null): CollectionResponse`
+  - `getBeneficiary(?string $inn = null, ?string $ogrn = null): CollectionResponse`
+
 ## [1.2.0] - 2025-04-04
 
 ### Added

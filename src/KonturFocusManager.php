@@ -108,6 +108,116 @@ final class KonturFocusManager
         return $this->builder(new CustomEndpoint($normalized));
     }
 
+    /**
+     * Получить данные из endpoint req
+     *
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getReq(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
+    {
+        return $this->execute(new ReqEndpoint(), $inn, $ogrn);
+    }
+
+    /**
+     * Получить данные из endpoint egrDetails
+     *
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getEgrDetails(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
+    {
+        return $this->execute(new EgrDetailsEndpoint(), $inn, $ogrn);
+    }
+
+    /**
+     * Получить данные из endpoint legalAnalytics
+     *
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getLegalAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
+    {
+        return $this->execute(new LegalAnalyticsEndpoint(), $inn, $ogrn);
+    }
+
+    /**
+     * Получить данные из endpoint bankruptcyAnalytics
+     *
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getBankruptcyAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
+    {
+        return $this->execute(new BankruptcyAnalyticsEndpoint(), $inn, $ogrn);
+    }
+
+    /**
+     * Получить данные из endpoint courtAnalytics
+     *
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getCourtAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
+    {
+        return $this->execute(new CourtAnalyticsEndpoint(), $inn, $ogrn);
+    }
+
+    /**
+     * Получить данные из endpoint financeAnalytics
+     *
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getFinanceAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
+    {
+        return $this->execute(new FinanceAnalyticsEndpoint(), $inn, $ogrn);
+    }
+
+    /**
+     * Получить данные из endpoint fsspAnalytics
+     *
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getFsspAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
+    {
+        return $this->execute(new FsspAnalyticsEndpoint(), $inn, $ogrn);
+    }
+
+    /**
+     * Получить данные из endpoint linkAnalytics
+     *
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getLinkAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
+    {
+        return $this->execute(new LinkAnalyticsEndpoint(), $inn, $ogrn);
+    }
+
+    /**
+     * Получить данные из endpoint purchasesAnalytics
+     *
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getPurchasesAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
+    {
+        return $this->execute(new PurchasesAnalyticsEndpoint(), $inn, $ogrn);
+    }
+
+    /**
+     * Получить данные из endpoint licenses
+     *
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getLicenses(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
+    {
+        return $this->execute(new LicensesEndpoint(), $inn, $ogrn);
+    }
+
+    /**
+     * Получить данные из endpoint beneficiary
+     *
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getBeneficiary(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
+    {
+        return $this->execute(new BeneficiaryEndpoint(), $inn, $ogrn);
+    }
+
     private function builder(EndpointInterface $endpoint): RequestBuilderInterface
     {
         return new RequestBuilder(
@@ -116,5 +226,25 @@ final class KonturFocusManager
             endpoint: $endpoint,
             apiKey: $this->config->key,
         );
+    }
+
+    /**
+     * Выполнить запрос к endpoint с параметрами inn/ogrn
+     *
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    private function execute(EndpointInterface $endpoint, ?string $inn, ?string $ogrn): DTOs\CollectionResponse
+    {
+        $builder = $this->builder($endpoint);
+
+        if ($inn !== null) {
+            $builder->inn($inn);
+        }
+
+        if ($ogrn !== null) {
+            $builder->ogrn($ogrn);
+        }
+
+        return $builder->get();
     }
 }

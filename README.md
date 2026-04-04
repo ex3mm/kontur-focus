@@ -11,7 +11,6 @@ PHP 8.5+ пакет для интеграции с API Контур.Фокус.
 - retry middleware (сетевые ошибки, `5xx`, `429`)
 - cache middleware с кешированием только успешных `2xx` ответов
 - logging middleware с маскированием API ключа в query-параметре `key`
-- готовые DTO для endpoint-ов из схем `docs/endpoints/*/schema.json`
 
 ## Требования
 
@@ -51,15 +50,12 @@ $result = $focus->req()
 Provider и Facade подключаются через auto-discovery.
 
 ```php
-// Вариант 1: Использование глобального алиаса (рекомендуется)
-$result = \KonturFocus::req()
-    ->inn('7707083893')
-    ->asArray()
-    ->get();
-
-// Вариант 2: С полным импортом фасада
 use Ex3mm\KonturFocus\Laravel\Facades\KonturFocus;
 
+// Вариант 1: Упрощённый синтаксис (рекомендуется)
+$result = KonturFocus::getReq(inn: '7707083893');
+
+// Вариант 2: Fluent API для гибкой настройки
 $result = KonturFocus::req()
     ->inn('7707083893')
     ->asArray()
@@ -154,6 +150,45 @@ return [
 | `custom('/api3/...')` | произвольный | нет | Нет |
 
 ## Использование RequestBuilder
+
+### Упрощённые методы фассада
+
+```php
+use Ex3mm\KonturFocus\Laravel\Facades\KonturFocus;
+
+// Получить данные по ИНН
+$result = KonturFocus::getReq(inn: '7707083893');
+
+// Получить данные по ОГРН
+$result = KonturFocus::getEgrDetails(ogrn: '1027700132195');
+
+// Можно передать оба параметра
+$result = KonturFocus::getLegalAnalytics(
+    inn: '7707083893',
+    ogrn: '1027700132195'
+);
+
+// Доступные методы:
+
+| Метод | Параметры | Возвращает |
+| --- | --- | --- |
+| `getReq()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getEgrDetails()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getLegalAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getBankruptcyAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getCourtAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getFinanceAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getFsspAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getLinkAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getPurchasesAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getLicenses()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getBeneficiary()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+
+// Все методы возвращают CollectionResponse
+$result->items;      // array<DTO>
+$result->first();    // DTO|null
+$result->isEmpty();  // bool
+```
 
 ### Режим `asArray()`
 
@@ -314,21 +349,3 @@ final readonly class ParentDto
 - в лог всегда пишется краткая строка запроса (`METHOD URL`)
 - API ключ в query-параметре `key` маскируется (`***`)
 - в зависимости от уровня добавляются заголовки и body
-
-## Где лежат схемы ответа
-
-Схемы и описания полей лежат в директории:
-
-- `docs/endpoints/*/schema.json`
-- `docs/endpoints/*/fields.json`
-
-DTO генерируются скриптом:
-
-```bash
-python3 scripts/generate_dtos.py
-```
-
-Целевая директория DTO:
-
-- `src/DTOs/Response/*`
-
