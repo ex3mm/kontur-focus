@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ex3mm\KonturFocus\Requests;
 
-use JsonException;
 use Ex3mm\KonturFocus\Contracts\ClientInterface;
 use Ex3mm\KonturFocus\Contracts\RequestBuilderInterface;
 use Ex3mm\KonturFocus\Contracts\ResponseMapperInterface;
@@ -12,6 +11,7 @@ use Ex3mm\KonturFocus\DTOs\CollectionResponse;
 use Ex3mm\KonturFocus\Exceptions\ConfigurationException;
 use Ex3mm\KonturFocus\Exceptions\EmptyResponseException;
 use Ex3mm\KonturFocus\Exceptions\InvalidResponseException;
+use JsonException;
 
 final class RequestBuilder extends AbstractRequest implements RequestBuilderInterface
 {

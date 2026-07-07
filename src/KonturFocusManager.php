@@ -11,6 +11,7 @@ use Ex3mm\KonturFocus\Contracts\ClientInterface;
 use Ex3mm\KonturFocus\Contracts\EndpointInterface;
 use Ex3mm\KonturFocus\Contracts\RequestBuilderInterface;
 use Ex3mm\KonturFocus\Contracts\ResponseMapperInterface;
+use Ex3mm\KonturFocus\Endpoints\AccountingReportsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\BankruptcyAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\BeneficiaryEndpoint;
 use Ex3mm\KonturFocus\Endpoints\CourtAnalyticsEndpoint;
@@ -96,6 +97,11 @@ final class KonturFocusManager
     public function beneficiary(): RequestBuilderInterface
     {
         return $this->builder(new BeneficiaryEndpoint());
+    }
+
+    public function accountingReports(): RequestBuilderInterface
+    {
+        return $this->builder(new AccountingReportsEndpoint());
     }
 
     public function custom(string $endpoint): RequestBuilderInterface
@@ -216,6 +222,16 @@ final class KonturFocusManager
     public function getBeneficiary(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
     {
         return $this->execute(new BeneficiaryEndpoint(), $inn, $ogrn);
+    }
+
+    /**
+     * Получить данные из endpoint accountingReports
+     *
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getAccountingReports(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
+    {
+        return $this->execute(new AccountingReportsEndpoint(), $inn, $ogrn);
     }
 
     private function builder(EndpointInterface $endpoint): RequestBuilderInterface

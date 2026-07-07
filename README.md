@@ -147,6 +147,7 @@ return [
 | `purchasesAnalytics()` | `/api3/purchasesAnalytics` | `PurchasesAnalyticsResponseDto` | Да |
 | `licenses()` | `/api3/licences` | `LicensesResponseDto` | Да |
 | `beneficiary()` | `/api3/beneficialOwners` | `BeneficiaryResponseDTO` | Да |
+| `accountingReports()` | `/api3/accountingReports` | `AccountingReportsResponseDto` | Да |
 | `custom('/api3/...')` | произвольный | нет | Нет |
 
 ## Использование RequestBuilder
@@ -167,8 +168,9 @@ $result = KonturFocus::getLegalAnalytics(
     inn: '7707083893',
     ogrn: '1027700132195'
 );
+```
 
-// Доступные методы:
+#### Доступные методы:
 
 | Метод | Параметры | Возвращает |
 | --- | --- | --- |
@@ -183,7 +185,9 @@ $result = KonturFocus::getLegalAnalytics(
 | `getPurchasesAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 | `getLicenses()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 | `getBeneficiary()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getAccountingReports()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 
+```php
 // Все методы возвращают CollectionResponse
 $result->items;      // array<DTO>
 $result->first();    // DTO|null

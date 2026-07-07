@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Ex3mm\KonturFocus\Client;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\HandlerStack;
-use Kevinrob\GuzzleCache\CacheMiddleware;
-use Kevinrob\GuzzleCache\Storage\Psr6CacheStorage;
 use Ex3mm\KonturFocus\Config\KonturFocusConfig;
 use Ex3mm\KonturFocus\Middleware\LoggingMiddleware;
 use Ex3mm\KonturFocus\Middleware\RetryMiddleware;
 use Ex3mm\KonturFocus\Middleware\SuccessOnlyCacheStrategy;
+use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
+use Kevinrob\GuzzleCache\CacheMiddleware;
+use Kevinrob\GuzzleCache\Storage\Psr6CacheStorage;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;

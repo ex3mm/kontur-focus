@@ -7,6 +7,13 @@
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-07-07
+
+### Added
+
+- Добавлен endpoint `accountingReports()` для получения форм бухгалтерской отчётности (`/api3/accountingReports`)
+- Добавлен упрощённый метод `getAccountingReports(?string $inn = null, ?string $ogrn = null): CollectionResponse`
+
 ## [1.3.0] - 2025-04-04
 
 ### Added

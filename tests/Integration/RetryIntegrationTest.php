@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\Psr7\Response;
 use Ex3mm\KonturFocus\Client\GuzzleClientFactory;
 use Ex3mm\KonturFocus\Client\KonturFocusClient;
 use Ex3mm\KonturFocus\Config\KonturFocusConfig;
 use Ex3mm\KonturFocus\Endpoints\ReqEndpoint;
 use Ex3mm\KonturFocus\Mappers\ResponseMapper;
 use Ex3mm\KonturFocus\Requests\RequestBuilder;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Response;
 
 function retryConfig(array $override = []): KonturFocusConfig
 {

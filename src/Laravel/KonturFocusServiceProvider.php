@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Ex3mm\KonturFocus\Laravel;
 
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\ServiceProvider;
 use Ex3mm\KonturFocus\Client\GuzzleClientFactory;
 use Ex3mm\KonturFocus\Config\KonturFocusConfig;
 use Ex3mm\KonturFocus\Contracts\ResponseMapperInterface;
 use Ex3mm\KonturFocus\KonturFocusManager;
 use Ex3mm\KonturFocus\Mappers\ResponseMapper;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\ServiceProvider;
 
 final class KonturFocusServiceProvider extends ServiceProvider
 {
@@ -31,8 +31,8 @@ final class KonturFocusServiceProvider extends ServiceProvider
             $channel = $loggingConfig['channel'] ?? 'default';
 
             // Получаем логгер из Laravel
-            $logger = $channel === 'default' 
-                ? $app->make('log') 
+            $logger = $channel === 'default'
+                ? $app->make('log')
                 : $app->make('log')->channel($channel);
 
             return new GuzzleClientFactory(logger: $logger);

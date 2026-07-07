@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use GuzzleHttp\Psr7\Response;
 use Ex3mm\KonturFocus\Contracts\ClientInterface;
 use Ex3mm\KonturFocus\Contracts\ResponseMapperInterface;
 use Ex3mm\KonturFocus\DTOs\Response\Req\ReqResponseDto;
@@ -11,6 +10,7 @@ use Ex3mm\KonturFocus\Endpoints\ReqEndpoint;
 use Ex3mm\KonturFocus\Exceptions\RequestValidationException;
 use Ex3mm\KonturFocus\Mappers\ResponseMapper;
 use Ex3mm\KonturFocus\Requests\RequestBuilder;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
 it('проверяет что для стандартных endpoint передан inn или ogrn', function (): void {

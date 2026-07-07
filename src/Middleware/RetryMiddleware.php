@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Ex3mm\KonturFocus\Middleware;
 
 use DateTimeImmutable;
-use GuzzleHttp\Middleware;
 use Ex3mm\KonturFocus\Config\RetryConfig;
+use GuzzleHttp\Middleware;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;

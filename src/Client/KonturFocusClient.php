@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Ex3mm\KonturFocus\Client;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Exception\TransferException;
 use Ex3mm\KonturFocus\Config\KonturFocusConfig;
 use Ex3mm\KonturFocus\Contracts\ClientInterface;
 use Ex3mm\KonturFocus\Exceptions\AuthenticationException;
@@ -19,6 +15,10 @@ use Ex3mm\KonturFocus\Exceptions\NotFoundException;
 use Ex3mm\KonturFocus\Exceptions\RateLimitException;
 use Ex3mm\KonturFocus\Exceptions\ServerException;
 use Ex3mm\KonturFocus\Exceptions\ValidationException;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\TransferException;
 use Psr\Http\Message\ResponseInterface;
 
 final class KonturFocusClient implements ClientInterface
