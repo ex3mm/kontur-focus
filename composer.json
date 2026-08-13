@@ -1,14 +1,15 @@
 {
   "name": "ex3mm/kontur-focus",
   "description": "Laravel/PHP package for Kontur.Focus API integration",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "type": "library",
   "license": "MIT",
   "require": {
     "php": "^8.5",
     "guzzlehttp/guzzle": "^7.9",
-    "kevinrob/guzzle-cache-middleware": "^7.0",
+    "kevinrob/guzzle-cache-middleware": "^8.0",
     "psr/cache": "^3.0",
+    "psr/clock": "^1.0",
     "psr/log": "^3.0",
     "symfony/cache": "^7.3"
   },
