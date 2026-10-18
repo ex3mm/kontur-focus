@@ -22,10 +22,12 @@ use Ex3mm\KonturFocus\Endpoints\FsspAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\LegalAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\LicensesEndpoint;
 use Ex3mm\KonturFocus\Endpoints\LinkAnalyticsEndpoint;
+use Ex3mm\KonturFocus\Endpoints\PersonBankruptcyEndpoint;
 use Ex3mm\KonturFocus\Endpoints\PurchasesAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\ReqEndpoint;
 use Ex3mm\KonturFocus\Mappers\ResponseMapper;
 use Ex3mm\KonturFocus\Requests\RequestBuilder;
+use LogicException;
 
 final class KonturFocusManager
 {
@@ -89,6 +91,11 @@ final class KonturFocusManager
         return $this->builder(new PurchasesAnalyticsEndpoint());
     }
 
+    public function personBankruptcy(): RequestBuilderInterface
+    {
+        return $this->builder(new PersonBankruptcyEndpoint());
+    }
+
     public function licenses(): RequestBuilderInterface
     {
         return $this->builder(new LicensesEndpoint());
@@ -117,6 +124,7 @@ final class KonturFocusManager
     /**
      * Получить данные из endpoint req
      *
+     * @return DTOs\CollectionResponse<object>
      * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
      */
     public function getReq(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
@@ -127,6 +135,7 @@ final class KonturFocusManager
     /**
      * Получить данные из endpoint egrDetails
      *
+     * @return DTOs\CollectionResponse<object>
      * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
      */
     public function getEgrDetails(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
@@ -137,6 +146,7 @@ final class KonturFocusManager
     /**
      * Получить данные из endpoint legalAnalytics
      *
+     * @return DTOs\CollectionResponse<object>
      * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
      */
     public function getLegalAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
@@ -147,6 +157,7 @@ final class KonturFocusManager
     /**
      * Получить данные из endpoint bankruptcyAnalytics
      *
+     * @return DTOs\CollectionResponse<object>
      * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
      */
     public function getBankruptcyAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
@@ -157,6 +168,7 @@ final class KonturFocusManager
     /**
      * Получить данные из endpoint courtAnalytics
      *
+     * @return DTOs\CollectionResponse<object>
      * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
      */
     public function getCourtAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
@@ -167,6 +179,7 @@ final class KonturFocusManager
     /**
      * Получить данные из endpoint financeAnalytics
      *
+     * @return DTOs\CollectionResponse<object>
      * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
      */
     public function getFinanceAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
@@ -177,6 +190,7 @@ final class KonturFocusManager
     /**
      * Получить данные из endpoint fsspAnalytics
      *
+     * @return DTOs\CollectionResponse<object>
      * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
      */
     public function getFsspAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
@@ -187,6 +201,7 @@ final class KonturFocusManager
     /**
      * Получить данные из endpoint linkAnalytics
      *
+     * @return DTOs\CollectionResponse<object>
      * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
      */
     public function getLinkAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
@@ -197,6 +212,7 @@ final class KonturFocusManager
     /**
      * Получить данные из endpoint purchasesAnalytics
      *
+     * @return DTOs\CollectionResponse<object>
      * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
      */
     public function getPurchasesAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
@@ -205,8 +221,36 @@ final class KonturFocusManager
     }
 
     /**
+     * Получить сведения о банкротстве физического лица.
+     *
+     * @return DTOs\CollectionResponse<object>
+     */
+    public function getPersonBankruptcy(
+        ?string $inn = null,
+        ?string $fio = null,
+        ?string $birthDate = null,
+    ): DTOs\CollectionResponse {
+        $parameters = [];
+
+        if ($inn !== null) {
+            $parameters['innfl'] = $inn;
+        }
+
+        if ($fio !== null) {
+            $parameters['fio'] = $fio;
+        }
+
+        if ($birthDate !== null) {
+            $parameters['birthDate'] = $birthDate;
+        }
+
+        return $this->execute(new PersonBankruptcyEndpoint(), parameters: $parameters);
+    }
+
+    /**
      * Получить данные из endpoint licenses
      *
+     * @return DTOs\CollectionResponse<object>
      * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
      */
     public function getLicenses(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
@@ -217,6 +261,7 @@ final class KonturFocusManager
     /**
      * Получить данные из endpoint beneficiary
      *
+     * @return DTOs\CollectionResponse<object>
      * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
      */
     public function getBeneficiary(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
@@ -227,6 +272,7 @@ final class KonturFocusManager
     /**
      * Получить данные из endpoint accountingReports
      *
+     * @return DTOs\CollectionResponse<object>
      * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
      */
     public function getAccountingReports(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
@@ -245,12 +291,19 @@ final class KonturFocusManager
     }
 
     /**
-     * Выполнить запрос к endpoint с параметрами inn/ogrn
+     * Выполнить запрос к endpoint с параметрами inn/ogrn и дополнительными параметрами
+     *
+     * @param array<string, string> $parameters
+     * @return DTOs\CollectionResponse<object>
      *
      * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
      */
-    private function execute(EndpointInterface $endpoint, ?string $inn, ?string $ogrn): DTOs\CollectionResponse
-    {
+    private function execute(
+        EndpointInterface $endpoint,
+        ?string $inn = null,
+        ?string $ogrn = null,
+        array $parameters = [],
+    ): DTOs\CollectionResponse {
         $builder = $this->builder($endpoint);
 
         if ($inn !== null) {
@@ -261,6 +314,16 @@ final class KonturFocusManager
             $builder->ogrn($ogrn);
         }
 
-        return $builder->get();
+        foreach ($parameters as $name => $value) {
+            $builder->param($name, $value);
+        }
+
+        $result = $builder->get();
+
+        if (is_array($result)) {
+            throw new LogicException('Manager endpoint execution must return a DTO collection.');
+        }
+
+        return $result;
     }
 }

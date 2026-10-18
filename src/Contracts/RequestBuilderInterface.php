@@ -24,7 +24,7 @@ interface RequestBuilderInterface
     public function throwOnEmpty(): static;
 
     /**
-     * @return array<mixed>|CollectionResponse
+     * @return array<mixed>|CollectionResponse<object>
      */
     public function get(): array|CollectionResponse;
 }

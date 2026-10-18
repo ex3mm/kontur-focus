@@ -7,6 +7,12 @@
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-10-18
+
+### Added
+
+- Добавлена поддержка endpoint `/api3/personBankruptcy` через `personBankruptcy()` и `getPersonBankruptcy()`.
+
 ## [1.5.0] - 2026-08-13
 
 ### Changed

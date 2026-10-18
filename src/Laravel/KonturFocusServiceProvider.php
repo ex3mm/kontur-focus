@@ -11,6 +11,7 @@ use Ex3mm\KonturFocus\KonturFocusManager;
 use Ex3mm\KonturFocus\Mappers\ResponseMapper;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Log\LogManager;
 use Illuminate\Support\ServiceProvider;
 
 final class KonturFocusServiceProvider extends ServiceProvider
@@ -27,13 +28,17 @@ final class KonturFocusServiceProvider extends ServiceProvider
 
             /** @var array<string, mixed> $config */
             $config = $configRepository->get('kontur-focus', []);
-            $loggingConfig = $config['logging'] ?? [];
+            /** @var array<string, mixed> $loggingConfig */
+            $loggingConfig = (array) ($config['logging'] ?? []);
             $channel = $loggingConfig['channel'] ?? 'default';
+            $channel = is_string($channel) ? $channel : 'default';
 
             // Получаем логгер из Laravel
+            /** @var LogManager $logManager */
+            $logManager = $app->make('log');
             $logger = $channel === 'default'
-                ? $app->make('log')
-                : $app->make('log')->channel($channel);
+                ? $logManager
+                : $logManager->channel($channel);
 
             return new GuzzleClientFactory(logger: $logger);
         });

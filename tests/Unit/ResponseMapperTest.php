@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Ex3mm\KonturFocus\DTOs\Attributes\ArrayOf;
+use Ex3mm\KonturFocus\DTOs\Attributes\MapFrom;
 use Ex3mm\KonturFocus\Exceptions\DtoMappingException;
 use Ex3mm\KonturFocus\Mappers\ResponseMapper;
 
@@ -32,6 +33,15 @@ readonly class MapperBrokenDto
      */
     public function __construct(public array $items)
     {
+    }
+}
+
+readonly class MapperAliasedDto
+{
+    public function __construct(
+        #[MapFrom('sourceName')]
+        public string $targetName,
+    ) {
     }
 }
 
@@ -69,4 +79,13 @@ it('маппит корневую коллекцию в список dto', funct
     expect($result)->toBeArray()
         ->and($result[0])->toBeInstanceOf(MapperChildDto::class)
         ->and($result[1]->name)->toBe('b');
+});
+
+it('маппит поле DTO из другого имени ключа ответа', function (): void {
+    $mapped = (new ResponseMapper())->map([
+        'sourceName' => 'value',
+    ], MapperAliasedDto::class);
+
+    expect($mapped)->toBeInstanceOf(MapperAliasedDto::class)
+        ->and($mapped->targetName)->toBe('value');
 });

@@ -145,6 +145,7 @@ return [
 | `fsspAnalytics()` | `/api3/fsspAnalytics` | `FsspAnalyticsResponseDto` | Да |
 | `linkAnalytics()` | `/api3/linkAnalytics` | `LinkAnalyticsResponseDto` | Да |
 | `purchasesAnalytics()` | `/api3/purchasesAnalytics` | `PurchasesAnalyticsResponseDto` | Да |
+| `personBankruptcy()` | `/api3/personBankruptcy` | `PersonBankruptcyResponseDto` | Нет: `innfl` или `fio` |
 | `licenses()` | `/api3/licences` | `LicensesResponseDto` | Да |
 | `beneficiary()` | `/api3/beneficialOwners` | `BeneficiaryResponseDTO` | Да |
 | `accountingReports()` | `/api3/accountingReports` | `AccountingReportsResponseDto` | Да |
@@ -183,6 +184,7 @@ $result = KonturFocus::getLegalAnalytics(
 | `getFsspAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 | `getLinkAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 | `getPurchasesAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getPersonBankruptcy()` | `?string $inn = null, ?string $fio = null, ?string $birthDate = null` | `CollectionResponse` |
 | `getLicenses()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 | `getBeneficiary()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 | `getAccountingReports()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
@@ -193,6 +195,37 @@ $result->items;      // array<DTO>
 $result->first();    // DTO|null
 $result->isEmpty();  // bool
 ```
+
+### Банкротство физического лица
+
+Endpoint `/api3/personBankruptcy` принимает ИНН физического лица или ФИО; `birthDate` можно передать дополнительно для уточнения поиска. В публичном convenience-методе используется параметр `inn`, который внутри преобразуется в API-параметр `innfl`.
+
+```php
+// По ИННФЛ
+$result = $focus->getPersonBankruptcy(
+    inn: '123456789012',
+    fio: 'Иванов Иван Иванович',
+    birthDate: '1980-01-15',
+);
+
+// Fluent API по ФИО
+$result = $focus->personBankruptcy()
+    ->param('innfl', '123456789012')
+    ->param('fio', 'Иванов Иван Иванович')
+    ->param('birthDate', '1980-01-15')
+    ->asDto()
+    ->get();
+
+$person = $result->first();
+$person->stage;                    // Текущая стадия банкротства
+$person->caseNumber;              // Номер арбитражного дела
+$person->extrajudicialBankruptcy; // Внесудебное банкротство
+$person->arbitrationManager;      // Арбитражный управляющий
+$person->stages;                  // История стадий
+$person->messages;                // Сообщения ЕФРСБ
+```
+
+Для сообщений доступны `messageId`, `decision` и `annulment`. В `decision` также возвращается `terminationType`, если Контур.Фокус передал причину прекращения производства.
 
 ### Режим `asArray()`
 
