@@ -7,7 +7,7 @@ namespace Ex3mm\KonturFocus\DTOs;
 /**
  * Обертка для коллекций DTO с сырым ответом
  *
- * @template T
+ * @template T of object
  */
 final readonly class CollectionResponse
 {

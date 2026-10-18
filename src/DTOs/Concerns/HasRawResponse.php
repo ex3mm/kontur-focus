@@ -13,6 +13,7 @@ trait HasRawResponse
      */
     public function __debugInfo(): array
     {
+        /** @var array<string, mixed> $properties */
         $properties = get_object_vars($this);
 
         // Всегда скрываем raw, так как он теперь в CollectionResponse

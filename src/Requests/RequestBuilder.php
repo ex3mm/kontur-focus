@@ -58,6 +58,9 @@ final class RequestBuilder extends AbstractRequest implements RequestBuilderInte
         return $this;
     }
 
+    /**
+     * @return array<mixed>|CollectionResponse<object>
+     */
     public function get(): array|CollectionResponse
     {
         $this->validate();
@@ -110,7 +113,8 @@ final class RequestBuilder extends AbstractRequest implements RequestBuilderInte
     }
 
     /**
-     * @param array<mixed>|object $mapped
+     * @param array<object>|object $mapped
+     * @return CollectionResponse<object>
      */
     private function attachRawResponse(array|object $mapped, string $raw): CollectionResponse
     {

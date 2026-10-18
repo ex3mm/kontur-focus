@@ -6,6 +6,7 @@ namespace Ex3mm\KonturFocus\Mappers;
 
 use Ex3mm\KonturFocus\Contracts\ResponseMapperInterface;
 use Ex3mm\KonturFocus\DTOs\Attributes\ArrayOf;
+use Ex3mm\KonturFocus\DTOs\Attributes\MapFrom;
 use Ex3mm\KonturFocus\Exceptions\DtoMappingException;
 use ReflectionClass;
 use ReflectionIntersectionType;
@@ -59,7 +60,7 @@ final class ResponseMapper implements ResponseMapperInterface
         $arguments = [];
 
         foreach ($parameters as $parameter) {
-            $name = $parameter->getName();
+            $name = $this->resolvePayloadField($parameter);
             $parameterPath = $path.'.'.$name;
 
             if (array_key_exists($name, $payload)) {
@@ -88,6 +89,17 @@ final class ResponseMapper implements ResponseMapperInterface
 
         /** @var object */
         return $reflection->newInstanceArgs($arguments);
+    }
+
+    private function resolvePayloadField(ReflectionParameter $parameter): string
+    {
+        $attributes = $parameter->getAttributes(MapFrom::class);
+
+        if ($attributes === []) {
+            return $parameter->getName();
+        }
+
+        return $attributes[0]->newInstance()->field;
     }
 
     /**
