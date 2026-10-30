@@ -19,6 +19,7 @@ use Ex3mm\KonturFocus\Endpoints\CustomEndpoint;
 use Ex3mm\KonturFocus\Endpoints\EgrDetailsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\FinanceAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\FsspAnalyticsEndpoint;
+use Ex3mm\KonturFocus\Endpoints\FsspEndpoint;
 use Ex3mm\KonturFocus\Endpoints\LegalAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\LicensesEndpoint;
 use Ex3mm\KonturFocus\Endpoints\LinkAnalyticsEndpoint;
@@ -81,6 +82,11 @@ final class KonturFocusManager
     public function fsspAnalytics(): RequestBuilderInterface
     {
         return $this->builder(new FsspAnalyticsEndpoint());
+    }
+
+    public function fssp(): RequestBuilderInterface
+    {
+        return $this->builder(new FsspEndpoint());
     }
 
     public function linkAnalytics(): RequestBuilderInterface
@@ -208,6 +214,26 @@ final class KonturFocusManager
     public function getFsspAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
     {
         return $this->execute(new FsspAnalyticsEndpoint(), $inn, $ogrn);
+    }
+
+    /**
+     * Получить исполнительные производства.
+     *
+     * @return DTOs\CollectionResponse<object>
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getFssp(
+        ?string $inn = null,
+        ?string $ogrn = null,
+        ?int $skip = null,
+    ): DTOs\CollectionResponse {
+        $parameters = [];
+
+        if ($skip !== null) {
+            $parameters['skip'] = $skip;
+        }
+
+        return $this->execute(new FsspEndpoint(), $inn, $ogrn, $parameters);
     }
 
     /**
