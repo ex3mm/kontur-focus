@@ -7,6 +7,15 @@
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-10-30
+
+### Added
+
+- Добавлен endpoint `/api3/purchasesOfParticipant` с fluent-методом `purchasesOfParticipant()` и упрощённым методом `getPurchasesOfParticipant()` для получения закупок, в которых участвовала организация.
+- Добавлен endpoint `/api3/petitionersOfArbitration` с fluent-методом `petitionersOfArbitration()` и упрощённым методом `getPetitionersOfArbitration()` для получения статистики по истцам в арбитражных делах.
+- Добавлен endpoint `/api3/fssp` с fluent-методом `fssp()` и упрощённым методом `getFssp()` для получения исполнительных производств.
+- Добавлены DTO для всех полей новых endpoint-ов и поддержка их параметров пагинации.
+
 ## [1.6.0] - 2026-10-18
 
 ### Added

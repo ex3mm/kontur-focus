@@ -143,8 +143,11 @@ return [
 | `courtAnalytics()` | `/api3/courtAnalytics` | `CourtAnalyticsResponseDto` | Да |
 | `financeAnalytics()` | `/api3/financeAnalytics` | `FinanceAnalyticsResponseDto` | Да |
 | `fsspAnalytics()` | `/api3/fsspAnalytics` | `FsspAnalyticsResponseDto` | Да |
+| `fssp()` | `/api3/fssp` | `FsspResponseDto` | Да |
 | `linkAnalytics()` | `/api3/linkAnalytics` | `LinkAnalyticsResponseDto` | Да |
 | `purchasesAnalytics()` | `/api3/purchasesAnalytics` | `PurchasesAnalyticsResponseDto` | Да |
+| `purchasesOfParticipant()` | `/api3/purchasesOfParticipant` | `PurchasesOfParticipantResponseDto` | Да |
+| `petitionersOfArbitration()` | `/api3/petitionersOfArbitration` | `PetitionersOfArbitrationResponseDto` | Да |
 | `personBankruptcy()` | `/api3/personBankruptcy` | `PersonBankruptcyResponseDto` | Нет: `innfl` или `fio` |
 | `licenses()` | `/api3/licences` | `LicensesResponseDto` | Да |
 | `beneficiary()` | `/api3/beneficialOwners` | `BeneficiaryResponseDTO` | Да |
@@ -182,8 +185,11 @@ $result = KonturFocus::getLegalAnalytics(
 | `getCourtAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 | `getFinanceAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 | `getFsspAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getFssp()` | `?string $inn = null, ?string $ogrn = null, ?int $skip = null` | `CollectionResponse` |
 | `getLinkAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 | `getPurchasesAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getPurchasesOfParticipant()` | `?string $inn = null, ?string $ogrn = null, ?int $skip = null, ?int $take = null` | `CollectionResponse` |
+| `getPetitionersOfArbitration()` | `?string $inn = null, ?string $ogrn = null, ?int $skip = null, ?int $take = null` | `CollectionResponse` |
 | `getPersonBankruptcy()` | `?string $inn = null, ?string $fio = null, ?string $birthDate = null` | `CollectionResponse` |
 | `getLicenses()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 | `getBeneficiary()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
@@ -195,6 +201,57 @@ $result->items;      // array<DTO>
 $result->first();    // DTO|null
 $result->isEmpty();  // bool
 ```
+
+### Исполнительные производства
+
+Endpoint `/api3/fssp` возвращает актуальность данных (`updateDate`) и список исполнительных производств в поле `fssp`. Для постраничного получения списка используется `skip` с шагом 1000.
+
+```php
+$result = KonturFocus::getFssp(
+    inn: '7707083893',
+    skip: 1000,
+);
+
+$company = $result->first();
+$company->updateDate; // Дата актуальности данных
+$company->fssp;       // array<FsspDataDto>|null
+```
+
+Каждое производство содержит номер, сводный номер, даты, сумму, предмет и исполнительный документ, данные должника, признаки возврата взыскателю/окончания по банкротству или ликвидации, дату окончания и данные отдела судебных приставов.
+
+### Закупки участника
+
+Endpoint `/api3/purchasesOfParticipant` возвращает закупки, в которых участвовала организация. Параметры `skip` и `take` управляют постраничной выдачей.
+
+```php
+$result = KonturFocus::getPurchasesOfParticipant(
+    inn: '7707083893',
+    skip: 0,
+    take: 100,
+);
+
+$company = $result->first();
+$company->purchasesOfParticipant; // array<PurchaseDto>
+```
+
+Закупка содержит сведения о способе и статусе закупки, ценах, заказчиках, участниках, контракте и объектах закупки с кодами ОКДП, ОКПД, ОКПД2 и КТРУ.
+
+### Истцы в арбитражных делах
+
+Endpoint `/api3/petitionersOfArbitration` возвращает статистику по организациям, выступавшим истцами в арбитражных делах за последние три года. Параметры `skip` и `take` управляют постраничной выдачей.
+
+```php
+$result = KonturFocus::getPetitionersOfArbitration(
+    inn: '7707083893',
+    skip: 0,
+    take: 100,
+);
+
+$company = $result->first();
+$company->petitioners; // array<PetitionerDto>|null
+```
+
+Для каждого истца доступны ИНН, ОГРН, наименование, основной вид деятельности, оценка количества дел и исковой суммы за три года, а также дата последнего дела.
 
 ### Банкротство физического лица
 
