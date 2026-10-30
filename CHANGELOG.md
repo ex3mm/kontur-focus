@@ -7,6 +7,14 @@
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-10-30
+
+### Added
+
+- Добавлен endpoint `/api3/companyAffiliationsTypes` с fluent-методом `companyAffiliationsTypes()` и упрощённым методом `getCompanyAffiliationsTypes()` для получения ближайших связей компаний.
+- Добавлены DTO для статусов организаций, типов связей, ролей, связанных юридических и физических лиц, долей учредителей и акционеров.
+- Добавлена поддержка параметров `skip`, `take` и `affiliationType`.
+
 ## [1.7.0] - 2026-10-30
 
 ### Added

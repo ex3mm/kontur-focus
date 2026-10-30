@@ -14,6 +14,7 @@ use Ex3mm\KonturFocus\Contracts\ResponseMapperInterface;
 use Ex3mm\KonturFocus\Endpoints\AccountingReportsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\BankruptcyAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\BeneficiaryEndpoint;
+use Ex3mm\KonturFocus\Endpoints\CompanyAffiliationsTypesEndpoint;
 use Ex3mm\KonturFocus\Endpoints\CourtAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\CustomEndpoint;
 use Ex3mm\KonturFocus\Endpoints\EgrDetailsEndpoint;
@@ -72,6 +73,11 @@ final class KonturFocusManager
     public function courtAnalytics(): RequestBuilderInterface
     {
         return $this->builder(new CourtAnalyticsEndpoint());
+    }
+
+    public function companyAffiliationsTypes(): RequestBuilderInterface
+    {
+        return $this->builder(new CompanyAffiliationsTypesEndpoint());
     }
 
     public function financeAnalytics(): RequestBuilderInterface
@@ -192,6 +198,36 @@ final class KonturFocusManager
     public function getCourtAnalytics(?string $inn = null, ?string $ogrn = null): DTOs\CollectionResponse
     {
         return $this->execute(new CourtAnalyticsEndpoint(), $inn, $ogrn);
+    }
+
+    /**
+     * Получить ближайшие связи компаний.
+     *
+     * @return DTOs\CollectionResponse<object>
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getCompanyAffiliationsTypes(
+        ?string $inn = null,
+        ?string $ogrn = null,
+        ?int $skip = null,
+        ?int $take = null,
+        ?int $affiliationType = null,
+    ): DTOs\CollectionResponse {
+        $parameters = [];
+
+        if ($skip !== null) {
+            $parameters['skip'] = $skip;
+        }
+
+        if ($take !== null) {
+            $parameters['take'] = $take;
+        }
+
+        if ($affiliationType !== null) {
+            $parameters['affiliationType'] = $affiliationType;
+        }
+
+        return $this->execute(new CompanyAffiliationsTypesEndpoint(), $inn, $ogrn, $parameters);
     }
 
     /**

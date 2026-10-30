@@ -141,6 +141,7 @@ return [
 | `legalAnalytics()` | `/api3/legalAnalytics` | `LegalAnalyticsResponseDto` | Да |
 | `bankruptcyAnalytics()` | `/api3/bankruptcyAnalytics` | `BankruptcyAnalyticsResponseDto` | Да |
 | `courtAnalytics()` | `/api3/courtAnalytics` | `CourtAnalyticsResponseDto` | Да |
+| `companyAffiliationsTypes()` | `/api3/companyAffiliationsTypes` | `CompanyAffiliationsTypesResponseDto` | Да |
 | `financeAnalytics()` | `/api3/financeAnalytics` | `FinanceAnalyticsResponseDto` | Да |
 | `fsspAnalytics()` | `/api3/fsspAnalytics` | `FsspAnalyticsResponseDto` | Да |
 | `fssp()` | `/api3/fssp` | `FsspResponseDto` | Да |
@@ -183,6 +184,7 @@ $result = KonturFocus::getLegalAnalytics(
 | `getLegalAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 | `getBankruptcyAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 | `getCourtAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
+| `getCompanyAffiliationsTypes()` | `?string $inn = null, ?string $ogrn = null, ?int $skip = null, ?int $take = null, ?int $affiliationType = null` | `CollectionResponse` |
 | `getFinanceAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 | `getFsspAnalytics()` | `?string $inn = null, ?string $ogrn = null` | `CollectionResponse` |
 | `getFssp()` | `?string $inn = null, ?string $ogrn = null, ?int $skip = null` | `CollectionResponse` |
@@ -201,6 +203,27 @@ $result->items;      // array<DTO>
 $result->first();    // DTO|null
 $result->isEmpty();  // bool
 ```
+
+### Ближайшие связи компаний
+
+Endpoint `/api3/companyAffiliationsTypes` возвращает связанные с проверяемой компанией организации и причины установленных связей. Параметры `skip` и `take` управляют постраничной выдачей, а `affiliationType` позволяет выбрать тип связи согласно справочнику Контур.Фокуса.
+
+```php
+$result = KonturFocus::getCompanyAffiliationsTypes(
+    inn: '6663003127',
+    skip: 0,
+    take: 100,
+    affiliationType: 2,
+);
+
+$affiliate = $result->first();
+$affiliate->inn;         // ИНН связанной организации или ИП
+$affiliate->name;       // Наименование организации или ФИО ИП
+$affiliate->status;     // Статус организации или ИП
+$affiliate->connections; // Типы связей и роли участников
+```
+
+Связи могут содержать информацию о юридическом или физическом лице, через которое построена связь, роли в связанной и проверяемой компаниях, актуальность роли, доли учредителя и доли акционера.
 
 ### Исполнительные производства
 
