@@ -23,6 +23,7 @@ use Ex3mm\KonturFocus\Endpoints\LegalAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\LicensesEndpoint;
 use Ex3mm\KonturFocus\Endpoints\LinkAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\PersonBankruptcyEndpoint;
+use Ex3mm\KonturFocus\Endpoints\PetitionersOfArbitrationEndpoint;
 use Ex3mm\KonturFocus\Endpoints\PurchasesAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\PurchasesOfParticipantEndpoint;
 use Ex3mm\KonturFocus\Endpoints\ReqEndpoint;
@@ -95,6 +96,11 @@ final class KonturFocusManager
     public function purchasesOfParticipant(): RequestBuilderInterface
     {
         return $this->builder(new PurchasesOfParticipantEndpoint());
+    }
+
+    public function petitionersOfArbitration(): RequestBuilderInterface
+    {
+        return $this->builder(new PetitionersOfArbitrationEndpoint());
     }
 
     public function personBankruptcy(): RequestBuilderInterface
@@ -249,6 +255,31 @@ final class KonturFocusManager
         }
 
         return $this->execute(new PurchasesOfParticipantEndpoint(), $inn, $ogrn, $parameters);
+    }
+
+    /**
+     * Получить статистику по истцам в арбитражных делах.
+     *
+     * @return DTOs\CollectionResponse<object>
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getPetitionersOfArbitration(
+        ?string $inn = null,
+        ?string $ogrn = null,
+        ?int $skip = null,
+        ?int $take = null,
+    ): DTOs\CollectionResponse {
+        $parameters = [];
+
+        if ($skip !== null) {
+            $parameters['skip'] = $skip;
+        }
+
+        if ($take !== null) {
+            $parameters['take'] = $take;
+        }
+
+        return $this->execute(new PetitionersOfArbitrationEndpoint(), $inn, $ogrn, $parameters);
     }
 
     /**
