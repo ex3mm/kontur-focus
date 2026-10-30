@@ -24,6 +24,7 @@ use Ex3mm\KonturFocus\Endpoints\LicensesEndpoint;
 use Ex3mm\KonturFocus\Endpoints\LinkAnalyticsEndpoint;
 use Ex3mm\KonturFocus\Endpoints\PersonBankruptcyEndpoint;
 use Ex3mm\KonturFocus\Endpoints\PurchasesAnalyticsEndpoint;
+use Ex3mm\KonturFocus\Endpoints\PurchasesOfParticipantEndpoint;
 use Ex3mm\KonturFocus\Endpoints\ReqEndpoint;
 use Ex3mm\KonturFocus\Mappers\ResponseMapper;
 use Ex3mm\KonturFocus\Requests\RequestBuilder;
@@ -89,6 +90,11 @@ final class KonturFocusManager
     public function purchasesAnalytics(): RequestBuilderInterface
     {
         return $this->builder(new PurchasesAnalyticsEndpoint());
+    }
+
+    public function purchasesOfParticipant(): RequestBuilderInterface
+    {
+        return $this->builder(new PurchasesOfParticipantEndpoint());
     }
 
     public function personBankruptcy(): RequestBuilderInterface
@@ -221,6 +227,31 @@ final class KonturFocusManager
     }
 
     /**
+     * Получить закупки, в которых организация принимала участие.
+     *
+     * @return DTOs\CollectionResponse<object>
+     * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
+     */
+    public function getPurchasesOfParticipant(
+        ?string $inn = null,
+        ?string $ogrn = null,
+        ?int $skip = null,
+        ?int $take = null,
+    ): DTOs\CollectionResponse {
+        $parameters = [];
+
+        if ($skip !== null) {
+            $parameters['skip'] = $skip;
+        }
+
+        if ($take !== null) {
+            $parameters['take'] = $take;
+        }
+
+        return $this->execute(new PurchasesOfParticipantEndpoint(), $inn, $ogrn, $parameters);
+    }
+
+    /**
      * Получить сведения о банкротстве физического лица.
      *
      * @return DTOs\CollectionResponse<object>
@@ -293,7 +324,7 @@ final class KonturFocusManager
     /**
      * Выполнить запрос к endpoint с параметрами inn/ogrn и дополнительными параметрами
      *
-     * @param array<string, string> $parameters
+     * @param array<string, string|int|float|bool> $parameters
      * @return DTOs\CollectionResponse<object>
      *
      * @throws \Ex3mm\KonturFocus\Exceptions\RequestValidationException
